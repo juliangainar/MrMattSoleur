@@ -1,6 +1,7 @@
 package fr.rodez3il.a2022.mrmatt.solveur.structures;
 
 import java.util.Arrays;
+import java.util.*;
 
 public class ListeTableau<T> implements Liste<T> {
 
@@ -28,7 +29,8 @@ public class ListeTableau<T> implements Liste<T> {
    */
   @Override
   public void ajouter(T element) {
-    // si le tableau est rempli, car l'index est au maximum, on double sa taille
+    // si le tableau est rempli, car l'index est au maximum (au bout du tableau !),
+    // on double sa taille
     if (this.indexTableau == this.tableau.length) {
       this.tableau = Arrays.copyOf(this.tableau, this.indexTableau * 2);
     }
@@ -48,6 +50,7 @@ public class ListeTableau<T> implements Liste<T> {
   public boolean estVide() {
     // si l'index est à 0, cela veut dire que le tableau est vide
     return this.indexTableau == 0;
+    // ou return this.tableau.length == 0 ; (?) car liste de taille nulle
   }
 
   /**
@@ -58,6 +61,7 @@ public class ListeTableau<T> implements Liste<T> {
    */
   @Override
   public int taille() {
+    // on retourne l'index actuel (qui est la taille effective du tableau)
     return this.indexTableau;
   }
 
@@ -73,15 +77,18 @@ public class ListeTableau<T> implements Liste<T> {
   public T enlever(int i) {
     // on garde l'element à supprimer
     T elementSupprime = this.tableau[i];
-    // on crée un tableau "copie" sans l'élément à supprimer
-    ListeTableau<T> temp = new ListeTableau(this.indexTableau);
+    // on supprime l'element à l'index i du tableau
+    // on cree une nouvelle liste temporaire
+    ArrayList<T> temp = new ArrayList<T>();
+    // on la copie sans l'élément à la position i
     for (int j = 0; j < this.indexTableau; j++) {
       if (j != i) {
-        temp.ajouter(this.tableau[j]);
+        temp.add(this.tableau[j]);
       }
     }
+    // puis on la reconvertit
     this.tableau = temp.toArray(this.tableau);
-    // reduit la taille
+    // On reduit la taille
     this.indexTableau--;
     // retourne l'element supprimé
     return elementSupprime;
@@ -96,6 +103,7 @@ public class ListeTableau<T> implements Liste<T> {
    */
   @Override
   public T element(int i) {
+    // on retourne l'element à l'index i
     return this.tableau[i];
   }
 
@@ -109,11 +117,16 @@ public class ListeTableau<T> implements Liste<T> {
    */
   @Override
   public boolean contient(T e) {
+    // if (e instanceof T) ?
+    // on parcourt le tableau
     for (int i = 0; i < this.indexTableau; i++) {
+      // si l'élément y est
       if (this.tableau[i].equals(e)) {
+        // on retourne vrai
         return true;
       }
     }
+    // false sinon
     return false;
   }
 }
