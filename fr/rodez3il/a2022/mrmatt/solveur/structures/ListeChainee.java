@@ -6,18 +6,19 @@ public class ListeChainee<T> implements Liste<T> {
 
   // Classes
 
-  class Maillon {
+  private class Maillon {
 
-    // attributs
+    // Attributs
     private T donnee;
     private Maillon suivant;
 
-    // constructeurs
+    // Constructeurs
     public Maillon(T donnee, Maillon suivant) {
       this.donnee = donnee;
       this.suivant = suivant;
     }
-
+    // Accesseurs
+    // Methodes
   }
 
   // Attributs
@@ -110,14 +111,18 @@ public class ListeChainee<T> implements Liste<T> {
         maillonApres = maillonApres.suivant;
       }
 
-      // on echange les references des deux maillons = "supprimer"
+      // on echange les references des deux maillons = on supprime le maillon
+      // (raccrocher)
       maillonAvant.suivant = maillonApres.suivant;
+      // si on supprime le premier ?!?!?! A REVOIR
 
       // on garde la donnée pour la renvoyer
       T donneeMaillonSupprime = maillonApres.donnee;
+      // on reduit la taille de la liste
+      this.taille--;
+      // on renvoit la donnee
+      return donneeMaillonSupprime;
     }
-
-    this.taille--;
   }
 
   /**
@@ -129,7 +134,16 @@ public class ListeChainee<T> implements Liste<T> {
    */
   @Override
   public T element(int i) {
-
+    Maillon maillonARetourner = this.premierElement;
+    // on verifie d'abord si i est dans les limites de la liste
+    if (i < 0 || i > this.taille) {
+      throw new IndexOutOfBoundsException();
+    } else {
+      for (int j = 0; j < i; j++) {
+        maillonARetourner = maillonARetourner.suivant;
+      }
+      return maillonARetourner.donnee;
+    }
   }
 
   /**
@@ -143,7 +157,18 @@ public class ListeChainee<T> implements Liste<T> {
 
   @Override
   public boolean contient(T e) {
-
+    // on declare le premier maillon
+    Maillon maillonParcouru = this.premierElement;
+    // on parcourt la liste des elements et on verifie s'il existe un maillon ayant
+    // l'element e dans son .donnee
+    for (int i = 0; i < taille; i++) {
+      if (maillonParcouru.donnee.equals(e)) {
+        return true;
+      }
+      // on passe au suivant
+      maillonParcouru = maillonParcouru.suivant;
+    }
+    return false;
   }
 
 }
