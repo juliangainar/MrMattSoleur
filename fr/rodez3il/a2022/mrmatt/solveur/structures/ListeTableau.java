@@ -15,10 +15,9 @@ public class ListeTableau<T> implements Liste<T> {
     this.indexTableau = 0;
     // initialise le tableau à une certaine taille
     this.tableau = (T[]) new Object[tailleInitiale];
-
   }
-  // Accesseurs
 
+  // Accesseurs
   // Méthodes
 
   /**
@@ -26,6 +25,7 @@ public class ListeTableau<T> implements Liste<T> {
    * 
    * @authors Iulian GAINAR
    * @param element l'élément à ajouter
+   * @returns void
    */
   @Override
   public void ajouter(T element) {
@@ -36,7 +36,7 @@ public class ListeTableau<T> implements Liste<T> {
     }
     // on ajoute l'élément à la liste
     this.tableau[this.indexTableau] = element;
-    // on incrémente l'index du tableau'
+    // on incrémente l'index du tableau
     this.indexTableau++;
   }
 
@@ -76,18 +76,11 @@ public class ListeTableau<T> implements Liste<T> {
   @Override
   public T enlever(int i) {
     // on garde l'element à supprimer
-    T elementSupprime = this.tableau[i];
+    T elementSupprime = this.element(i);
     // on supprime l'element à l'index i du tableau
-    // on cree une nouvelle liste temporaire
-    ArrayList<T> temp = new ArrayList<T>();
-    // on la copie sans l'élément à la position i
-    for (int j = 0; j < this.indexTableau; j++) {
-      if (j != i) {
-        temp.add(this.tableau[j]);
-      }
+    for(int index = i; index < this.indexTableau; index++){
+      this.tableau[i] = this.tableau[i+1];
     }
-    // puis on la reconvertit
-    this.tableau = temp.toArray(this.tableau);
     // On reduit la taille
     this.indexTableau--;
     // retourne l'element supprimé
@@ -126,7 +119,7 @@ public class ListeTableau<T> implements Liste<T> {
         return true;
       }
     }
-    // false sinon
+    // s'il n'y est pas, on retourne faux
     return false;
   }
 }

@@ -1,6 +1,7 @@
 package fr.rodez3il.a2022.mrmatt.solveur.structures;
 
 public class ListeChainee<T> implements Liste<T> {
+
   // cours utilisé
   // http://deptinfo.cnam.fr/Enseignement/CycleA/APA/nfa032/docs/cours-listes.pdf
 
@@ -45,8 +46,8 @@ public class ListeChainee<T> implements Liste<T> {
   public void ajouter(T element) {
     // on cree le nouveau maillon à rajouter à la liste
     Maillon nouveauMaillon = new Maillon(element, null);
-    // on parcourt la liste et on l'ajoute en dernier
-    // si la liste est vide, on l'ajoute en tant que premier element
+    // on parcourt la liste et on l'ajoute en dernier.
+    // Si la liste est vide, on l'ajoute en tant que premier element
     if (this.estVide()) { // ou this.premierElement == null
       this.premierElement = nouveauMaillon;
     } else {
@@ -94,11 +95,11 @@ public class ListeChainee<T> implements Liste<T> {
   @Override
   public T enlever(int i) {
     // il faut parcourir la liste en recherche du dernier maillon
-
     // si la liste est vide, ou si i depasse les bords de la liste, on ne peut
     // rien supprimer
     if (this.estVide() || i < 0 || i > this.taille) { // ou this.premierElement == null
-      System.err.println("La liste est vide ou le numéro ne correspond dépasse la taille de la liste.");
+      throw new IndexOutOfBoundsException(
+          "La liste est vide ou le numéro ne correspond dépasse la taille de la liste.");
     } else {
       // sinon il faut trouver le maillon à l'index i et le supprimer et retourner
       // la donnee de l'element supprime
@@ -117,11 +118,11 @@ public class ListeChainee<T> implements Liste<T> {
       // si on supprime le premier ?!?!?! A REVOIR
 
       // on garde la donnée pour la renvoyer
-      T donneeMaillonSupprime = maillonApres.donnee;
+      T donnee = maillonApres.donnee;
       // on reduit la taille de la liste
       this.taille--;
       // on renvoit la donnee
-      return donneeMaillonSupprime;
+      return donnee;
     }
   }
 
@@ -160,7 +161,7 @@ public class ListeChainee<T> implements Liste<T> {
     // on declare le premier maillon
     Maillon maillonParcouru = this.premierElement;
     // on parcourt la liste des elements et on verifie s'il existe un maillon ayant
-    // l'element e dans son .donnee
+    // l'element e dans son .donnee()
     for (int i = 0; i < taille; i++) {
       if (maillonParcouru.donnee.equals(e)) {
         return true;

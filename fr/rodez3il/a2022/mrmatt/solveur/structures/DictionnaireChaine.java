@@ -15,12 +15,10 @@ public class DictionnaireChaine<C, V> implements Dictionnaire<C, V> {
 
     // Accesseurs
 
-    // retourne la cle
     public C getCle() {
       return this.cle;
     }
 
-    // retourne la valeur
     public V getValeur() {
       return this.valeur;
     }
@@ -62,13 +60,10 @@ public class DictionnaireChaine<C, V> implements Dictionnaire<C, V> {
       if (entree.getCle().equals(cle)) {
         // on change juste la valeur pour cette clé
         entree.setValeur(valeur);
-        return;
       }
     }
     // sinon on crée l'entrée et on la rajoute à laliste
-
     liste.ajouter(entree);
-    return;
   }
 
   /**
@@ -80,7 +75,12 @@ public class DictionnaireChaine<C, V> implements Dictionnaire<C, V> {
    */
   @Override
   public boolean contient(C cle) {
-    
+    for (int i = 0; i < liste.taille(); i++) {
+      if (liste.element(i).getCle().equals(cle)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -91,9 +91,12 @@ public class DictionnaireChaine<C, V> implements Dictionnaire<C, V> {
    */
   @Override
   public V valeur(C cle) {
-    for(Entree<C,V> entree : this.liste){
-      
+    for (int i = 0; i < liste.taille(); i++) {
+      if (liste.element(i).getCle().equals(cle)) {
+        return liste.element(i).getValeur();
+      }
     }
+    return null;
   }
 
 }
